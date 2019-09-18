@@ -12,7 +12,7 @@ class App extends React.Component {
       {
         text: 'aprender React',
         completed: false,
-        id: 0
+        id: 2
       },
       {
         text: 'aprender Express',
@@ -43,6 +43,14 @@ class App extends React.Component {
 
   }
 
+  editTodo = (todo) =>  {
+
+    this.setState({
+      todos: this.state.todos.map( _todo => _todo.id === todo.id ? todo : _todo  )
+    })
+
+  }
+
 
   render() {
     return (
@@ -54,7 +62,7 @@ class App extends React.Component {
               todos={this.state.todos}
               onNewTodo={this.addTodo}
               onCompleted={this.toggleCompleted} />
-            <TodoDetail path="/todo/:id" />
+            <TodoDetail path="/todo/:id" todos={this.state.todos}  onEditTodo={this.editTodo}/>
             <NotFound path="*" />
           </Router>
         </main>

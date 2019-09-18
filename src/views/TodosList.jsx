@@ -1,7 +1,7 @@
 
 import React from 'react'
 import './TodosList.scss'
-
+import { Link } from '@reach/router'
 
 class TodosList extends React.Component {
     state = {
@@ -25,7 +25,6 @@ class TodosList extends React.Component {
         return (
             <div className="TodosList">
                 <div className="addTodo">
-                    <h1>new text: {this.state.newTodoText}</h1>
                     <input
                         type="text"
                         placeholder="añade nueva tarea"
@@ -36,11 +35,11 @@ class TodosList extends React.Component {
                 </div>
                 <div className="allTodos">
                     {this.props.todos.map(todo => (
-                        <div key={todo.id}   className={`todo ${todo.completed ? 'completed' : ''}`}>
+                        <div key={todo.id} className={`todo ${todo.completed ? 'completed' : ''}`}>
                             <span className="text">{todo.text}</span>
-                            <div className="action">
+                            <div className="actions">
                                 <button onClick={() => this.props.onCompleted(todo.id)}> {todo.completed ? '✅' : '✔'}</button>
-                                <button> ✏ </button>
+                                <button><Link to={'/todo/' + todo.id}> ✏</Link> </button>
                             </div>
                         </div>
                     ))}
