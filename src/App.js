@@ -11,13 +11,24 @@ class App extends React.Component {
     todos: [
       {
         text:'aprender React',
-        completed:false
+        completed:false,
+        id:0
       },
       {
         text: 'aprender Express',
-        completed: true
+        completed: true,
+        id:1
       },
     ]
+  }
+
+  addTodo = (text) => {
+    const newTodo = {
+      text,
+      completed:false,
+      id: Date.now()
+    }
+    this.setState({ todos: [newTodo, ...this.state.todos ]      })
   }
 
 
@@ -27,7 +38,7 @@ class App extends React.Component {
       <div className="App">
         <main>
           <Router>
-            <TodosList path="/"  todos={this.state.todos}  />
+            <TodosList path="/" todos={this.state.todos} onNewTodo={this.addTodo}/>
             <TodoDetail path="/todo/:id" />
             <NotFound path="*" />
           </Router>

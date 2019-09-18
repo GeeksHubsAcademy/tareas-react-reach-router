@@ -1,7 +1,8 @@
 .TodosList {
   .addTodo {
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
+    align-items: center;
     justify-content: center;
     padding: 0.5em;
     input {
