@@ -10,14 +10,14 @@ class App extends React.Component {
   state = {
     todos: [
       {
-        text:'aprender React',
-        completed:false,
-        id:0
+        text: 'aprender React',
+        completed: false,
+        id: 0
       },
       {
         text: 'aprender Express',
         completed: true,
-        id:1
+        id: 1
       },
     ]
   }
@@ -25,12 +25,23 @@ class App extends React.Component {
   addTodo = (text) => {
     const newTodo = {
       text,
-      completed:false,
+      completed: false,
       id: Date.now()
     }
-    this.setState({ todos: [newTodo, ...this.state.todos ]      })
+    this.setState({ todos: [newTodo, ...this.state.todos] })
   }
+  toggleCompleted = id => {
+    this.setState({
+      todos: this.state.todos.map(todo => {
+        if (todo.id === id) {
+          todo.completed = !todo.completed;
 
+        }
+        return todo;
+      })
+    })
+
+  }
 
 
   render() {
@@ -38,7 +49,11 @@ class App extends React.Component {
       <div className="App">
         <main>
           <Router>
-            <TodosList path="/" todos={this.state.todos} onNewTodo={this.addTodo}/>
+            <TodosList
+              path="/"
+              todos={this.state.todos}
+              onNewTodo={this.addTodo}
+              onCompleted={this.toggleCompleted} />
             <TodoDetail path="/todo/:id" />
             <NotFound path="*" />
           </Router>

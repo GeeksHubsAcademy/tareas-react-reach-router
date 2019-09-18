@@ -13,6 +13,7 @@ class TodosList extends React.Component {
     }
     onKeyPress = (event) => {
         if (event.charCode === 13) {
+
             this.props.onNewTodo(event.target.value)
             this.setState({ newTodoText: '' });
         }
@@ -37,6 +38,10 @@ class TodosList extends React.Component {
                     {this.props.todos.map(todo => (
                         <div key={todo.id}   className={`todo ${todo.completed ? 'completed' : ''}`}>
                             <span className="text">{todo.text}</span>
+                            <div className="action">
+                                <button onClick={() => this.props.onCompleted(todo.id)}> {todo.completed ? '✅' : '✔'}</button>
+                                <button> ✏ </button>
+                            </div>
                         </div>
                     ))}
                 </div>
