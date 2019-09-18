@@ -7,68 +7,70 @@ import NotFound from './views/NotFound';
 import './App.scss'
 
 class App extends React.Component {
-  state = {
-    todos: [
-      {
-        text: 'aprender React',
-        completed: false,
-        id: 2
-      },
-      {
-        text: 'aprender Express',
-        completed: true,
-        id: 1
-      },
-    ]
-  }
+  state = JSON.parse(localStorage.getItem('state')) || {
+    todos: [],
+  };
 
-  addTodo = (text) => {
+  saveToLocalStorage = () => {
+    localStorage.setItem('state', JSON.stringify(this.state));
+  };
+
+  addTodo = text => {
     const newTodo = {
       text,
       completed: false,
-      id: Date.now()
-    }
-    this.setState({ todos: [newTodo, ...this.state.todos] })
-  }
+      id: Date.now(),
+    };
+    this.setState(
+      { todos: [newTodo, ...this.state.todos] },
+      this.saveToLocalStorage,
+    );
+  };
   toggleCompleted = id => {
-    this.setState({
-      todos: this.state.todos.map(todo => {
-        if (todo.id === id) {
-          todo.completed = !todo.completed;
+    this.setState(
+      {
+        todos: this.state.todos.map(todo => {
+          if (todo.id === id) {
+            todo.completed = !todo.completed;
+          }
+          return todo;
+        }),
+      },
+      this.saveToLocalStorage,
+    );
+  };
 
-        }
-        return todo;
-      })
-    })
-
-  }
-
-  editTodo = (todo) =>  {
-
-    this.setState({
-      todos: this.state.todos.map( _todo => _todo.id === todo.id ? todo : _todo  )
-    })
-
-  }
-
+  editTodo = todo => {
+    this.setState(
+      {
+        todos: this.state.todos.map(_todo =>
+          _todo.id === todo.id ? todo : _todo,
+        ),
+      },
+      this.saveToLocalStorage,
+    );
+  };
 
   render() {
     return (
-      <div className="App">
+      <div className='App'>
         <main>
           <Router>
             <TodosList
-              path="/"
+              path='/'
               todos={this.state.todos}
               onNewTodo={this.addTodo}
-              onCompleted={this.toggleCompleted} />
-            <TodoDetail path="/todo/:id" todos={this.state.todos}  onEditTodo={this.editTodo}/>
-            <NotFound path="*" />
+              onCompleted={this.toggleCompleted}
+            />
+            <TodoDetail
+              path='/todo/:id'
+              todos={this.state.todos}
+              onEditTodo={this.editTodo}
+            />
+            <NotFound path='*' />
           </Router>
         </main>
-        <footer>
-          La mejor app de tareas
-      </footer>
+        <footer>La mejor app de tareas</footer>
       </div>
     );
   }
