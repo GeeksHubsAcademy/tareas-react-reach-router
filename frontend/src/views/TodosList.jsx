@@ -2,43 +2,26 @@
 import React from 'react'
 import './TodosList.scss'
 import { Link } from '@reach/router'
+import AddTodo from '../components/AddTodo'
+import {connect } from 'react-redux'
+import { completeTodo } from '../store/actions'
+
+
 
 class TodosList extends React.Component {
-    state = {
-        newTodoText: ''
-    }
 
-    handleChange = (event) => {
-        this.setState({ newTodoText: event.target.value });
-    }
-    onKeyPress = (event) => {
-        if (event.charCode === 13) {
-
-            this.props.onNewTodo(event.target.value)
-            this.setState({ newTodoText: '' });
-        }
-    }
 
 
     render() {
-
         return (
             <div className="TodosList">
-                <div className="addTodo">
-                    <input
-                        type="text"
-                        placeholder="añade nueva tarea"
-                        value={this.state.newTodoText}
-                        onChange={this.handleChange}
-                        onKeyPress={this.onKeyPress}
-                    />
-                </div>
+                <AddTodo/>
                 <div className="allTodos">
                     {this.props.todos.map(todo => (
                         <div key={todo.id} className={`todo ${todo.completed ? 'completed' : ''}`}>
                             <span className="text">{todo.text}</span>
                             <div className="actions">
-                                <button onClick={() => this.props.onCompleted(todo.id)}> {todo.completed ? '✅' : '✔'}</button>
+                                <button onClick={() => this.props.onCompleted(todo)}> {todo.completed ? '✅' : '✔'}</button>
                                 <button onClick={() => this.props.onDeleteTodo(todo.id)}>❌</button>
                                 <button><Link to={'/todo/' + todo.id}> ✏</Link> </button>
                             </div>
@@ -53,7 +36,13 @@ class TodosList extends React.Component {
     }
 }
 
+function mapStateToProps (state) {
+    return {
+        todos: state.todos
+    }
+}
+
+const mapDispatchToProps = dispatch => ({ onCompleted: completeTodo(dispatch)  })
 
 
-
-export default TodosList;
+export default connect(mapStateToProps, mapDispatchToProps)(TodosList);
