@@ -5,9 +5,11 @@ var logger = require('morgan');
 
 var indexRouter = require('./routes/index');
 var todosRouter = require('./routes/todos');
+var cors = require('cors');
 
 var app = express();
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
