@@ -1,0 +1,29 @@
+GET http://localhost:3001/todos
+
+###
+
+POST http://localhost:3001/todos
+content-type:application/json
+
+{
+    "text":"aprender react",
+    "completed":false
+}
+
+
+###
+
+PUT http://localhost:3001/todos
+content-type:application/json
+
+{
+    "id": "1568887882716-0.3415022997674626",
+    "text":"aprender react!!",
+    "completed":true
+}
+
+
+
+###
+
+DELETE http://localhost:3001/todos/1568887882716-0.3415022997674626
