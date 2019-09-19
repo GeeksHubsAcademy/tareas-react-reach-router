@@ -39,6 +39,7 @@ class TodosList extends React.Component {
                             <span className="text">{todo.text}</span>
                             <div className="actions">
                                 <button onClick={() => this.props.onCompleted(todo.id)}> {todo.completed ? '✅' : '✔'}</button>
+                                <button onClick={() => this.props.onDeleteTodo(todo.id)}>❌</button>
                                 <button><Link to={'/todo/' + todo.id}> ✏</Link> </button>
                             </div>
                         </div>

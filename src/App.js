@@ -39,6 +39,14 @@ class App extends React.Component {
       this.saveToLocalStorage,
     );
   };
+  deleteTodo = id => {
+    this.setState(
+      {
+        todos: this.state.todos.filter(todo => todo.id !== id)
+      },
+      this.saveToLocalStorage,
+    );
+  };
 
   editTodo = todo => {
     this.setState(
@@ -61,6 +69,7 @@ class App extends React.Component {
               todos={this.state.todos}
               onNewTodo={this.addTodo}
               onCompleted={this.toggleCompleted}
+              onDeleteTodo={this.deleteTodo}
             />
             <TodoDetail
               path='/todo/:id'
