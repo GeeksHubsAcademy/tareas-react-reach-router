@@ -22,7 +22,7 @@ router.post('/', function(req, res, next) {
   const db = getData();
   const todo = req.body;
   todo.id = generateId();
-  db.todos.push(todo);
+  db.todos.unshift(todo);
   setData(db);
   res.status(201).json({ todos: db.todos });
 });
