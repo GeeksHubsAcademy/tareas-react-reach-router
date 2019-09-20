@@ -7,7 +7,8 @@ import {addTodo}  from '../store/actions'
 
  class AddTodo extends React.Component {
     state = {
-        newTodoText: ''
+        newTodoText: '',
+        error:''
     }
 
     handleChange = (event) => {
@@ -15,9 +16,11 @@ import {addTodo}  from '../store/actions'
     }
     onKeyPress = (event) => {
         if (event.charCode === 13) {
-
-            this.props.onNewTodo(event.target.value)
-            this.setState({ newTodoText: '' });
+            let value = event.target.value;
+            this.props.onNewTodo(value)
+                .then(() => this.setState({ newTodoText: '', error:'' }))
+                .catch(() => this.setState({ newTodoText: value, error: 'no se ha podido guardar' }))
+            ;
         }
     }
     render() {
@@ -30,6 +33,9 @@ import {addTodo}  from '../store/actions'
                     onChange={this.handleChange}
                     onKeyPress={this.onKeyPress}
                 />
+                <div>
+                    {this.state.error}
+                </div>
             </div>
         )
     }

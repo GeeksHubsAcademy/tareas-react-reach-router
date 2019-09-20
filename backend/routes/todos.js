@@ -24,7 +24,7 @@ router.post('/', function(req, res, next) {
   todo.id = generateId();
   db.todos.unshift(todo);
   setData(db);
-  res.status(201).json({ todos: db.todos });
+  res.status(201).json({ fakeId: todo.fakeId, id: todo.id });
 });
 
 router.put('/', function(req, res, next) {

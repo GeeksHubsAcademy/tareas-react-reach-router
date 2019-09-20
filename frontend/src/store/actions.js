@@ -13,15 +13,36 @@ export const loadTodos = dispatch => async () => {
 };
 
 export const addTodo = dispatch => async (text) => {
-  const { data } = await Axios.post(API_URL + '/todos', {
-      text: text,
-      completed:false
-  });
+  const newTodo = {
+    text: text,
+    completed: false,
+    fakeId: Date.now()
+  };
 
-  dispatch({
-    type: 'LOAD_TODOS',
-    payload: data.todos,
-  });
+   dispatch({
+     type: 'ADD_TODO_OPTIMISTICALLY',
+     payload: newTodo,
+   });
+
+  try {
+     const { data } = await Axios.post(API_URL + '/todos', newTodo, {
+       timeout: 30000,
+     });
+      dispatch({
+        type: 'ADD_TODO_SUCCESS',
+        payload: data,
+      });
+
+  } catch (error) {
+      dispatch({
+        type: 'ADD_TODO_FAIL',
+        payload: newTodo,
+      });
+      throw 'no se ha podido guardar'
+  }
+
+
+
 };
 
 

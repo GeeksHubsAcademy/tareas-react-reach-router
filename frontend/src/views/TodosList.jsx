@@ -10,8 +10,6 @@ import { completeTodo, deleteTodo } from '../store/actions'
 
 class TodosList extends React.Component {
 
-
-
     render() {
         return (
             <div className="TodosList">
@@ -20,6 +18,7 @@ class TodosList extends React.Component {
                     {this.props.todos.map(todo => (
                         <div key={todo.id} className={`todo ${todo.completed ? 'completed' : ''}`}>
                             <span className="text">{todo.text}</span>
+                            <div className="id">id:{todo.id}</div>
                             <div className="actions">
                                 <button onClick={() => this.props.onCompleted(todo)}> {todo.completed ? '✅' : '✔'}</button>
                                 <button onClick={() => this.props.onDeleteTodo(todo.id)}>❌</button>
