@@ -35,3 +35,14 @@ export const completeTodo = dispatch => async (todo) => {
     payload: data.todos,
   });
 };
+
+
+export const deleteTodo = dispatch => async (id) => {
+
+  const { data } = await Axios.delete(API_URL + '/todos/'+ id );
+
+  dispatch({
+    type: 'LOAD_TODOS',
+    payload: data.todos,
+  });
+};

@@ -4,7 +4,7 @@ import './TodosList.scss'
 import { Link } from '@reach/router'
 import AddTodo from '../components/AddTodo'
 import {connect } from 'react-redux'
-import { completeTodo } from '../store/actions'
+import { completeTodo, deleteTodo } from '../store/actions'
 
 
 
@@ -42,7 +42,10 @@ function mapStateToProps (state) {
     }
 }
 
-const mapDispatchToProps = dispatch => ({ onCompleted: completeTodo(dispatch)  })
+const mapDispatchToProps = dispatch => ({
+    onCompleted: completeTodo(dispatch),
+    onDeleteTodo: deleteTodo(dispatch)
+  })
 
 
 export default connect(mapStateToProps, mapDispatchToProps)(TodosList);
